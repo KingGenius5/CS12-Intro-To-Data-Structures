@@ -1,7 +1,7 @@
 import sys
 import random as r
 
-
+#Temporary code for now till I refactor
 def shuffle_list(words_list):
     """
     Shuffles order of words in a given list
