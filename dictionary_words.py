@@ -1,10 +1,30 @@
+import random
 import sys
-import random as r
 
-filename = "/Users/mtifak/Desktop/dev/Term-3/CS-1.2/Tweet-Generator/words.txt"
+def read_file():
+    words_list = list()
+    with open('/usr/share/dict/words', 'r') as f:
+        words_list = f.read().split('\n')
 
-my_file = open(filename, "r") #this just opens the file, how to get the stuff in the file
-lines = my_file.readlines()#this reads the lines and stores them in lines
-my_file.close()
+    return words_list
 
-print(lines)
+def select_words(count, list_of_words):
+    sentence = list()
+
+    while count > 0:
+        index = random.randint(0, len(words_list) - 1)
+
+        sentence.append(list_of_words[index])
+        count -= 1
+
+    return ' '.join(sentence)
+
+
+
+if __name__ == "__main__":
+    
+    words_list = read_file()
+
+    count = int(sys.argv[1])
+
+    print(select_words(count, words_list))
