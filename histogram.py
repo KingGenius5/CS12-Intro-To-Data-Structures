@@ -41,13 +41,25 @@ def histogram_list_of_lists(words):
 
     return word_histogram
 
+def unique_words(word_histogram):
+    uniw = set(word_histogram)
+    return len(uniw)
 
-words = read_file("sample.txt")
-print(histogram_dictonary(words))
-print(histogram_list_of_lists(words))
+#def frequency(words, word_histogram):
+
+
+
+if __name__ == "__main__":
+
+    words = read_file("sample.txt")
+    
+    print(histogram_dictonary(words))
+    print(histogram_list_of_lists(words))
+    print(unique_words(words))
+
+
 
 '''
-
 filename = "sample.txt"
 lines = open(filename, "r")
 
@@ -69,5 +81,4 @@ for word in lines:
 
   #Another way but shorter
   word_histogram[word] = word_histogram.get(word, 0) + 1
-
   '''
