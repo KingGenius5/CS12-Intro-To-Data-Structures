@@ -33,6 +33,23 @@ def histogram_list_of_lists(word_list):
 
     return histogram
 
+def histogram_list_of_tuples(word_list):
+    #Tuples are similar to lists
+    histogram = []
+
+    for word in words:
+
+        for index, item in enumerate(histogram):
+            #Item is already in list
+            if item[0] == word:
+                histogram[index] = (word, (item[1] + 1))
+                break
+        #Item is not in list
+        else:
+            histogram.append((word, 1))
+
+    return histogram
+
     
 def unique_words(histogram):
 
@@ -59,6 +76,7 @@ if __name__ == "__main__":
     
     print(histogram_dict(words))
     print(histogram_list_of_lists(words))
+    print(histogram_list_of_tuples(words))
     print(unique_words(histogram))
     print(frequency(histogram, "espresso"))
 
