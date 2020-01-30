@@ -14,6 +14,7 @@ def shuffle_list(words_list):
 
 
 if __name__ == "__main__":
+    
     words_list = []
 
     #Add args to list
