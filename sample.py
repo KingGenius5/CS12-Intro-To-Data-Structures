@@ -19,15 +19,47 @@ def read_file(file_name):
     return words
 
 def histogram_dictonary(words):
-    histogram = dict()
+    histogram = {}
 
-    #Look up and increment word
     for word in words:
         histogram[word] = histogram.get(word, 0) + 1
 
     return histogram
 
-def sample_by_frequency(histogram):
+#create the sample list
+def sample_list(histogram):
+    words_list = []
+
+    for key, value in histogram.items():
+        #add values to new list
+        for i in range(value):
+            words_list.append(key)
+
+    return words_list
+
+def sample_by_frequency(count, words_list):
 
     # TODO: select a word based on frequency
     #how can we sample words using observed frequencies?
+
+    list_count = []
+    histogram_count = {}
+    
+    for i in range(count):
+        list_count.append(random.choice(words_list))
+
+    for word in list_count:
+        histogram_count[word] = histogram_count.get(word, 0) + 1
+
+    return histogram_count
+    
+
+if __name__ == "__main__":
+
+    file_name = sys.argv[1]
+    words = read_file(file_name)
+
+    hist = histogram_dictonary(words)
+    words_list = sample_list(hist)
+
+    print(sample_by_frequency(10000, words_list))
