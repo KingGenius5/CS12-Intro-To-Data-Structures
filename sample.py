@@ -52,6 +52,31 @@ def sample_by_frequency(count, words_list):
         histogram_count[word] = histogram_count.get(word, 0) + 1
 
     return histogram_count
+
+def sentence_gen(count, token_count, histogram):
+
+    #get total number of words from selection
+    sentence = ""
+
+    while count > 0:
+        #choose a random number in that range.
+        rand_value = random.randint(0, token_count - 1)
+
+        #keeps track of value
+        total_count = 0
+
+        #loop through list and add values to total count
+        for key, value in histogram.items():
+            
+            if rand_value <= total_count:
+                sentence += f" {key}"
+                break
+
+            total_count += value
+        
+        count -= 1
+
+    return sentence
     
 
 if __name__ == "__main__":
@@ -63,3 +88,7 @@ if __name__ == "__main__":
     words_list = sample_list(hist)
 
     print(sample_by_frequency(10000, words_list))
+
+    token_count = len(words)
+    sent = sentence_gen(8, token_count, hist)
+    print(sent)
