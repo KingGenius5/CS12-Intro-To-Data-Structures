@@ -1,5 +1,7 @@
 import sys
 import random
+import time
+start_time = time.time()
 
 '''
 text = 'one fish two fish red fish blue fish'
@@ -92,3 +94,5 @@ if __name__ == "__main__":
     token_count = len(words)
     sent = sentence_gen(8, token_count, hist)
     print(sent)
+    #Thanks to Ninja for this.
+    print(f"--{time.time() - start_time} secounds --")
