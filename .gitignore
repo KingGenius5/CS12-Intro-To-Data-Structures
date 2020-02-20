@@ -1,0 +1,8 @@
+# Ignore Mac system files
+.DS_Store
+.vscode/
+
+# Ignore env folder
+venv
+__pycache__
+
