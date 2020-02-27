@@ -125,11 +125,50 @@ class LinkedList(object):
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        I'm thinking it's the same as find, where it's O(1) if the first item is deleted
+        TODO: Worst case running time: O(???) Why and under what conditions?
+         O(N) if the last item is deleted or isn't in the list so the whole linkedlist needs to be traversed.
+        """
         # TODO: Loop through all nodes to find one whose data matches given item
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
+        current_node = self.head
+        prev_node = None
+
+        #while there are still more nodes in linkedlist
+        while current_node is not None:
+
+            
+            #node with item has been found
+            if item == current_node.data:
+
+                #Cases
+                #item we want to remove is at head
+                if prev_node is None:
+                    self.head = current_node.next
+
+                    #but head is also tail
+                    if current_node.next is None:
+                        self.tail = prev_node
+
+                #item we want to remove is at tail
+                elif current_node.next is None:
+                    prev_node.next = None
+                    self.tail = prev_node
+
+                #make previous node point to next node
+                else:
+                    prev_node.next = current_node.next
+
+                return
+            
+            else:
+                prev_node = current_node
+                current_node = current_node.next
+
+        raise ValueError(f'Item not found: {item}')
+
 
 
 def test_linked_list():
@@ -147,7 +186,7 @@ def test_linked_list():
     print('length: {}'.format(ll.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
