@@ -1,4 +1,50 @@
 from dictogram import Dictogram
+import random
+
+'''
+Note: Currently using this version of my own previous built-up Markov chains to get the
+project off the ground. Ran into some errors with the MarkovChain Class, will revisit and fix class later
+on. This works just as well (prints the walks with capital letters and grammar) but is function-based rather than class-based.
+'''
+
+def new_chain(word_list, word):
+    
+    chain_list = []
+    for i in range(len(word_list) - 1):
+        if word == word_list[i]:
+            chain_list.append(word_list[i + 1])
+
+    chain = Dictogram(chain_list)
+    return chain
+
+def walk(word_list, length):
+    
+    sentence = []
+    histogram = Dictogram(word_list)
+    next_word = histogram.sample()
+    sentence.append(next_word)
+    for i in range(length - 1):
+        chain = new_chain(word_list, next_word)
+        if len(chain) > 0:
+            next_word = chain.sample()
+            sentence.append(next_word)
+
+    return sentence
+
+def create_sentence(words):
+    
+    #Basically a dumbed-down version of starting regular expressions
+    words[0] = words[0].capitalize()
+    formatted_sentence = ' '.join(words) + '.'
+
+    return formatted_sentence
+
+if __name__ == "__main__":
+    word_list = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'dog']
+    print(create_sentence(walk(word_list, 10)))
+
+
+'''
 
 class MarkovChain:
 
@@ -31,17 +77,12 @@ class MarkovChain:
 
     def walk(self, num_words):
         #TODO: generate a sentence num_words long using the markov chain
-        sentence = []
-        histogram = Dictogram(self)
-        next_word = histogram.sample()
-        sentence.append(next_word)
-        for i in range(len(num_words) - 1):
-            chain = new_chain(self, next_word)
-            if len(chain) > 0:
-                next_word = chain.sample()
-                sentence.append(next_word)
+        word = self.first_word
+        for i in range(num_words):
+            dictogram = self.markov_chain[word]
+            word = dictogram.sample()
 
-        return sentence
+        return word
 
     def print_chain(self):
         for word, histogram in self.markov_chain.items():
@@ -52,3 +93,6 @@ class MarkovChain:
 markov_chain = MarkovChain(["one", "fish", "two", "fish", "red", "fish", "blue", "fish"])
 markov_chain.print_chain()
 print(markov_chain.walk(10))
+
+
+'''
