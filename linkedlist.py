@@ -85,16 +85,42 @@ class LinkedList(object):
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        Just like append, this should be constant time which means O(1) since we're
+        only keeping track of the head node.
+        """
         # TODO: Create new node to hold given item
         # TODO: Prepend node before head, if it exists
+        new_node = Node(item)
+        #does head exist?
+        if self.head is not None:
+            #setting new node to point to current head as well as changing head pointer
+            new_node.next = self.head
+            self.head = new_node
+        
+        else:
+            self.head = new_node
+            self.tail = new_node
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
         TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+         O(1) if item is first in the list.
+        TODO: Worst case running time: O(???) Why and under what conditions?
+        I'm assuming O(N) if you have to transverse the entire linkedlist? Possibly
+        looking for something at the end of the linkedlist or it doesn't exist at all.
+        """
         # TODO: Loop through all nodes to find item where quality(item) is True
         # TODO: Check if node's data satisfies given quality function
+        node = self.head
+
+        while node is not None:
+            if quality(node.data) == True:
+                return node.data
+            else:
+                node = node.next
+
+        return None
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
