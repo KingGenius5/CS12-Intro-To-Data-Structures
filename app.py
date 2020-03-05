@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for
 from sample import *
 from markov import *
 import random
@@ -13,4 +13,4 @@ def main_tweet_page():
     words = read_file('manifesto.txt')
     sent = higher_order_walk(words, 40)
 
-    return sent
+    return render_template('index.html', sentence=sent)
