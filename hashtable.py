@@ -122,13 +122,13 @@ class HashTable(object):
         # TODO: Check if key-value entry exists in bucket
         # TODO: If found, update value associated with given key
         # TODO: Otherwise, insert given key-value entry into bucket
-        bucket = self.buckets[hash(key) % len(self.buckets)]
-        item = bucket.find(lambda item: item[0] == key)
-
-        if item is not None:
-            bucket.replace(item, (key, value))
-        else:
-            bucket.append((key, value))
+        bucket = self.buckets[hash(key) % len(self.buckets)] #use the key to get the bucket index with the hash function. then get the linked list inside the bucket
+        item = bucket.find(lambda item: item[0] == key) #get the item from the bucket, if it exist
+        data = (key,value)
+        if item != None: #if item exist, update the bucket with our new data
+            bucket.update_list(data)
+        else: #if linked list find returns None, append the data
+            bucket.append(data)
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.

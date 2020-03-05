@@ -169,6 +169,18 @@ class LinkedList(object):
 
         raise ValueError(f'Item not found: {item}')
 
+    def update_list(self, data):
+        '''Updates list by checking if data passed exist,
+        if data exist in the list, delete then append
+        if not just append'''
+        for item in self.items():
+            if item[0] == data[0]:
+                print(f"Updating {item} to {data}")
+                self.delete(item)
+            else:
+                continue
+            self.append(data)
+
 
 
 def test_linked_list():
