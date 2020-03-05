@@ -4,26 +4,37 @@
 <head>
   <meta charset="utf-8">
   <title>Karl Markov</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800'>
+  <link href="{{ url_for('static',filename='styles/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
 
   {% block content %}
-  <div class="container h-100"
-    style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Flag_of_the_Communist_Party_of_the_Philippines_%28alternative_II%29.svg/1200px-Flag_of_the_Communist_Party_of_the_Philippines_%28alternative_II%29.svg.png')">
-    <div class="row h-100 justify-content-center align-items-center">
-      <h1 class="p-5 mb-5">The Holy Father of Communism</h1>
-      <div class="card my-auto p-5" style="padding-left: 350px; padding-top: 30px; padding-bottom: 30px">
-        <img src="http://critical-theory.com/wp-content/uploads/2013/06/marx-racist1.jpg" alt="Long beard dude">
+
+  <div class="container">
+    <div class="card">
+       <div class="card__image-container">
+         <img class="card__image" src="http://critical-theory.com/wp-content/uploads/2013/06/marx-racist1.jpg" alt="Long Beard Dude">
       </div>
-      <div class="col-12">
-        <div class="jumbotron my-auto p-5">
-          <h1 class="display-1">{{ sentence }}</h1>
-        </div>
+        
+        <svg class="card__svg" viewBox="0 0 800 500">
+  
+          <path d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400 L 800 500 L 0 500" stroke="transparent" fill="#333"/>
+          <path class="card__line" d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400" stroke="pink" stroke-width="3" fill="transparent"/>
+        </svg>
+      
+       <div class="card__content">
+         <h1 class="card__title">Marxist Tweets</h1>
+       <p>{{ sentence }}</p>
       </div>
     </div>
+  </div>
 
-    {% endblock %}
+  <button class="refreshing" onClick="window.location.reload();">New Tweet</button>
+
+  {% endblock %}
 
 </body>
 

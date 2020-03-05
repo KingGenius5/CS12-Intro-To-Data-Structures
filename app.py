@@ -14,3 +14,7 @@ def main_tweet_page():
     sent = higher_order_walk(words, 40)
 
     return render_template('index.html', sentence=sent)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0')
