@@ -1,11 +1,87 @@
 from dictogram import Dictogram
+from histogram import read_word_file
 import random
+import string
+
 
 '''
 Note: Currently using this version of my own previous built-up Markov chains to get the
 project off the ground. Ran into some errors with the MarkovChain Class, will revisit and fix class later
 on. This works just as well (prints the walks with capital letters and grammar) but is function-based rather than class-based.
 '''
+
+def higher_order(word_list, new_words, order=2):
+    storage_dict = dict()
+
+    key_words = new_words.split()
+    if len(key_words) != order:
+        return "Length of input words does not equal order"
+
+    words = []
+    next_words = []
+    next_pairs = []
+
+    for i in range(len(word_list) - 1):
+        words.clear()
+        for j in range(order):
+            if i < (len(word_list) - order):
+                words.append(word_list[i + j])
+        if key_words == words:
+            next_words.clear()
+            for j in range(order):
+                next_words.append(word_list[i + (j + 1)])
+            next_words_str = " ".join(next_words)
+            next_pairs.append(next_words_str)
+
+    storage_dict[new_words] = Dictogram(next_pairs)
+    return storage_dict
+
+def order_sample(word_list, order=2):
+    histogram = Dictogram(word_list)
+    next_words = []
+
+    # sample a random word from histogram
+    next_word_str = histogram.sample()
+    # find all the words that come after 
+    chain = new_chain(word_list, next_word_str)
+    # append both words to a list
+    next_words.append(next_word_str)
+
+    for i in range(order - 1):
+        if len(chain) > 0:
+            next_word_str = chain.sample()
+            next_words.append(next_word_str)
+            chain = new_chain(word_list, next_word_str)
+
+    # join the words into a string and assign to a variable
+    words_str = " ".join(next_words)
+    return words_str
+
+def higher_order_walk(word_list, length, order=2):
+    sentence = []
+    next_words_list = []
+    
+    words_str = order_sample(word_list, order)
+    # append both words to the sentence
+    sentence.append(words_str)
+
+    # repeat until length of sentence == length input
+    for i in range(length - order):
+        # make sure next_words_list is empty
+        next_words_list.clear()
+        # get the list of pairs that comes after the previous pair
+        chain = higher_order(word_list, words_str, order)
+        # if the chain isn't empty
+        if len(chain[words_str]) > 0:
+            # sample the value in the chain, which is a dictogram
+            words_str = chain[words_str].sample()
+            # add both words individually to next_words_list
+            next_words_list = words_str.split()
+            # only append the second word to the sentence
+            sentence.append(next_words_list[order - 1])
+
+    return create_sentence(sentence)
+
 
 def new_chain(word_list, word):
     
@@ -16,6 +92,7 @@ def new_chain(word_list, word):
 
     chain = Dictogram(chain_list)
     return chain
+
 
 def walk(word_list, length):
     
@@ -31,17 +108,23 @@ def walk(word_list, length):
 
     return sentence
 
+
 def create_sentence(words):
     
-    #Basically a dumbed-down version of starting regular expressions
     words[0] = words[0].capitalize()
-    formatted_sentence = ' '.join(words) + '.'
-
+    last_word = words[len(words) - 1]
+    last_char = last_word[len(last_word) - 1]
+    formatted_sentence = ' '.join(words)
+    if last_char in string.punctuation:
+        formatted_sentence = formatted_sentence[:-1]
+    formatted_sentence = formatted_sentence + "."
     return formatted_sentence
 
+
 if __name__ == "__main__":
-    word_list = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'dog']
-    print(create_sentence(walk(word_list, 10)))
+    words = read_word_file('manifesto.txt')
+    #word_list = words.split()
+    print(higher_order_walk(words, 40))
 
 
 '''
