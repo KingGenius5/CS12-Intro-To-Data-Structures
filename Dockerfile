@@ -1,23 +1,27 @@
-# Pull Python image 
-FROM python:3
+# Most of the time, Alpine is a great base image to start with.
+# If we're building a container for Python, we use something different.
+# Learn why here: https://pythonspeed.com/articles/base-image-python-docker-images/
+# TLDR: Alpine is very slow when it comes to running Python!
 
-# Set working directory to 'container' folder
-WORKDIR /container
+# STEP 1: Install base image. Optimized for Python.
+FROM python:3.7-slim-buster
 
-# Move the requirements file into the container
-COPY requirements.txt ./
+# STEP 2: Install required dependencies.
+RUN pip install Flask
 
-# install all requirements
-RUN pip3 install -r requirements.txt
+# STEP 3: Copy the source code in the current directory to the container.
+# Store it in a folder named /app.
+ADD . /app
 
-# moves all files into the container
-COPY . .
+# STEP 4: Set working directory to /app so we can execute commands in it
+WORKDIR /app
 
+# STEP 5: Declare environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=development
 
-EXPOSE 5001
+# STEP 6: Expose the port that Flask is running on
+EXPOSE 5000
 
-# sets up python entrypoint
-ENTRYPOINT [ "python3" ] 
-
-# runs app.py to launch the flask server in production
-CMD [ "app.py" ]
+# STEP 7: Run Flask!
+CMD ["flask", "run", "--host=0.0.0.0"]
